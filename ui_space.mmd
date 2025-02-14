@@ -1,0 +1,182 @@
+---
+  config:
+    class:
+      hideEmptyMembersBox: true
+---
+
+classDiagram   
+    namespace UIspace {
+        class UIElement
+        class InteractableUIElement
+        class Container
+        class ContainerElement
+        class Vector2
+
+        class Text
+        class TextStyle
+        class Font
+        class Label
+
+        class Button
+        class TextButton
+        class ImageButton
+        class Slider
+
+        class Image
+        class VectorImage
+        class RasterImage
+        class ProceduralImage
+        
+        class Color
+        class Dropdown
+    }
+
+    class Vector2 {
+        float x
+        float y
+    }
+
+    class UIElement {
+        <<abstract>>
+        Vector2 position
+        Vector2 size
+        float rotation
+        Vector2 origin
+        -boolean isVisible
+        -boolean isActive
+        void setOrigin(int x, int y)
+        void setOrigin(float x, float y)
+
+
+        +activate()
+        +deactivate()
+        +setActive() boolean
+        +setActive(boolean) boolean
+        
+        +show() 
+        +hide()
+        +setVisible() boolean
+        +setVisible(boolean) boolean
+        
+        +draw()
+    }
+
+    class InteractableUIElement {
+        <<abstract>>
+        -boolean isHovered
+
+        +setHovered() boolean
+        +setHovered(boolean) boolean
+        +setPressed() boolean
+        +setPressed(boolean) boolean
+    }
+
+    class Container {
+        UIElement[] elements
+        boolean vertical
+        %%from sides of container
+        Vector2 padding
+        %%between elements
+        Vector2 space
+    }
+
+    class ContainerElement{
+        %%UIElement element
+        %%int flex
+        %%float maxWidth, minWidth
+        %%float maxHeight, minHeight 
+        getElement() UIElement
+        getFlex() int
+        getMaxWidth() float
+        getMinWidth() float
+        getMaxHeight() float
+        getMinHeight() float
+    }
+    
+
+    Label --|> Text
+    TextButton --|> Button
+    ImageButton --|> Button
+    InteractableUIElement <|-- Button
+
+    TextStyle --> Text
+    UIElement <|-- Text
+    UIElement <|-- Container
+    UIElement <|-- ContainerElement
+    ContainerElement --> Container
+    InteractableUIElement <|-- Slider
+    InteractableUIElement <|-- Dropdown
+    UIElement <|-- Image
+    InteractableUIElement --|> UIElement
+
+    VectorImage --|> Image
+    RasterImage --|> Image
+    ProceduralImage --|> Image
+
+    class Text {
+        String text
+        TextStyle style
+
+        setStyle(TextStyle)    
+        setStyle(Color, int, Font)
+        %%return this
+        setColor(Color) Text 
+        setSize(int) Text
+        setFont(Font) Text
+    }
+
+    class TextStyle {
+        %%Color color
+        %%int size
+        %%Font font
+
+        getColor() color
+        getSize() int
+        getFont() Font
+    }
+
+    class Label {
+        Image background
+    }
+
+    class Button {
+        Image hover
+        Image pressed
+        Image button
+
+        +onClick()
+        +onPress()
+        +onRelease()
+        +onEnter()
+        +onExit()
+    }
+
+    class TextButton {
+        Text text
+    }
+
+    class ImageButton {
+        Image image
+    }  
+
+    class Color {
+        +float r, g, b, a
+        setColor(int,int,int,int)
+        setColor(int,int,int)
+        setColor(float,float,float,float)
+        setColor(float,float,float)
+    }
+
+    class Dropdown {
+        UIElement[] list
+        int selectedIndex
+        boolean isOpen
+    }
+
+    class Slider {
+        float value
+        float minValue, maxValue
+        
+        Image rail
+        Image pointer
+    }

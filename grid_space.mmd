@@ -1,0 +1,62 @@
+classDiagram
+    namespace Gridspace {
+        class Grid~E~
+        class IndexedGrid~E~
+        class UIGrid~E~
+        class Point
+
+        class Indexer
+        class ZigZagIndexer
+        class SpiralIndexer
+        class MortonIndexer
+    }
+        class Point {
+            int x
+            int y
+            getSideNeighbors() Point[4]
+            getDiagonalNeighbors() Point[4]
+            getNeighbors() Point[8]
+            getNeighbors(int range) Point[]
+        }
+
+        class Grid~E~ {
+            <<Interface>>
+            add(Point point, E obj)
+            add(int x, int y, E obj)
+            get(Point point)
+            get(int x, int y)
+            remove(Point point)
+            remove(int x, int y)
+            set(Point point, E obj)
+            set(int x, int y, E obj)
+        }
+
+        class IndexedGrid~E~ {
+            <<Interface>>
+            add(E obj)
+            add(int index, E obj)
+            get(int index)
+            remove(int index) E
+            set(int index, E obj)
+            indexOf(Object obj) int
+            lastIndexOf(Object obj) int
+            lastIndex() int
+        }
+
+        class UIGrid~E~ {
+
+        }
+
+        class Indexer {
+            indexOf(Point point) int
+            indexOf(int x, int y) int
+        }
+        
+
+        Grid <|-- IndexedGrid
+        IndexedGrid "1" --> "1" Indexer
+        UIGrid --|> IndexedGrid
+        UIGrid --|> UIElement
+        Indexer <|-- ZigZagIndexer
+        Indexer <|-- SpiralIndexer
+        Indexer <|-- MortonIndexer

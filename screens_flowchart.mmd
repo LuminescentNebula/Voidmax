@@ -1,0 +1,14 @@
+graph TD
+    MM[Main Menu]
+
+    MM <--> Settings
+    MM --> Game
+    Game --> Map
+    Map --> Level
+    Level --> Combat
+    Level --> Event
+    Game --> Menu
+    Menu --> Settings
+    Level --> Management
+
+    Management

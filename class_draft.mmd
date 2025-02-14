@@ -1,0 +1,208 @@
+classDiagram 
+    class Renderer {
+        <<interface>>
+        drawSprite()
+        %% #//Sprite sprite, float x, float y,\n \t float width, float height,\n flaot rotation
+    }
+
+
+    namespace Screenspace {
+        class Screen
+        class StarMapScreen
+        class LevelScreen
+        class CombatScreen
+        class MenuScreen
+        class SettingsScreen
+        class EventScreen
+    }
+
+    %% combat withe enemy when certain cell is opened
+    Screen <|-- CombatScreen
+    %% level with closed cells
+    Screen <|-- LevelScreen
+    %% big map of stars connected with each other
+    Screen <|-- StarMapScreen 
+    %% start screen with buttons
+    Screen <|-- MenuScreen
+    %% settings screen
+    Screen <|-- SettingsScreen
+    %% event screen with text, picture and buttons
+    Screen <|-- EventScreen
+
+
+    class Game {
+        int seed
+        Level current
+    }
+
+    class Level {
+        int width, height
+        Minefield minefield
+        GridPlayer player
+        onEnter()
+        onMove()
+        onExit()
+    }
+    Level --> GridPlayer
+
+    class Minefield {
+        Cell[][] cells
+    }
+
+    Level "1" --> "1" Minefield
+    Minefield "1" --> "many" Cell
+    
+    %%namespace Gridspace {
+    %%    class Grid
+    %%    class IndexedGrid
+    %%    class Indexer
+    %%    class Point
+    %%}
+    %%Grid <|-- IndexedGrid
+    %%IndexedGrid "1" --> "1" Indexer
+
+    namespace Cellspace {
+        class Cell {
+            open()
+        }
+        class EmptyCell
+        class EnemyCell
+        class MineCell
+        class EventCell
+        class EnterCell
+        class ExitCell
+    }
+    Cell <|-- EmptyCell
+    Cell <|-- EnemyCell
+    Cell <|-- MineCell
+    Cell <|-- EventCell
+    Cell <|-- EnterCell
+    Cell <|-- ExitCell  
+
+    class Prisoner
+
+
+    namespace CombatSpace {
+        class CombatData
+        class Enemy
+        class CombatPlayer
+    }
+    class Enemy {
+        int health
+        int attack
+    }
+    CombatData --> Enemy
+    CombatData --> CombatPlayer
+    EnemyCell --> CombatData
+    CombatScreen --> CombatData
+
+    CombatPlayer --> PlayerData
+    GridPlayer --> PlayerData
+
+    class GridPlayer {
+        int x, y
+        float rotation
+        move()
+    }
+    
+    class PlayerData {
+        int health
+        int attack
+        int defense
+        int fuel
+        Prisoner[] prisoners
+        Item[] items
+    }
+    PlayerData --> Prisoner
+    PlayerData --> Item
+    class Item {
+        String name
+        String description
+        int value
+    }
+
+    class MenuScreen {
+        Button continueButton 
+        Button newGameButton
+        Button settingsButton
+        Button exitButton
+    }
+
+    class SettingsScreen {
+        Button backButton
+        Slider musicVolume
+        Slider soundVolume
+        Dropdown languagesList
+
+    }
+
+    MenuScreen --> StarMapScreen
+    MenuScreen --> SettingsScreen
+    StarMapScreen --> LevelScreen
+    
+    LevelScreen --> Level
+    LevelScreen --> CombatScreen
+    LevelScreen --> EventScreen
+
+    namespace Starspace {
+        class StarMap
+        class Star
+        class Way
+    }
+
+    class StarMap {
+        Star[] stars
+        Way[] ways
+    } 
+    class Way {
+        Star start
+        Star end
+        boolean isBilateral
+    }
+    class Star {
+        int x, y, size
+        Way[] neighbors
+        Color color
+        boolean isVisited
+        boolean isCurrent
+    }
+    StarMap --> Way
+    StarMap --> Star
+    Star --> Level
+
+
+
+    namespace LevelSpace {
+        class Level
+        class Minefield
+        class Cell
+        class GridPlayer
+    }
+
+    namespace ManagementSpace {
+        class PlayerData
+        class Item
+        class Prisoner
+    }
+
+    class Save {
+        
+    }
+
+    namespace EventSpace {
+        class EventData{
+            Image image
+            Text text
+            Option[] options
+        }
+        class Option
+    }
+    EventScreen --> EventData
+    EventCell --> EventData
+    EventData --> Option
+    class Option {
+        String text
+        boolean special
+        next() EventData
+        isAvailable() boolean
+    }
