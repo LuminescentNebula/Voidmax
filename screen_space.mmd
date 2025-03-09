@@ -1,0 +1,40 @@
+classDiagram 
+    namespace Screenspace {
+        class Screen
+        %%class StarMapScreen
+        class MenuScreen
+        class SettingsScreen
+    }
+    class Screen {
+        <<Interface>>
+        +resize(int width, int height)
+        +show()
+        +hide() void        
+        +handleInput(InputEvent event) void
+        +navigateTo(Screen nextScreen) void
+    }
+
+
+
+    %% big map of stars connected with each other
+    %%Screen <|-- StarMapScreen 
+    %% start screen with buttons
+    Screen <|-- MenuScreen
+    %% settings screen
+    Screen <|-- SettingsScreen
+
+    class MenuScreen {
+        Button continueButton 
+        Button newGameButton
+        Button settingsButton
+        Button exitButton
+    }
+
+    class SettingsScreen {
+        Button backButton
+        Slider musicVolume
+        Slider soundVolume
+        Dropdown languagesList
+
+    }
+    

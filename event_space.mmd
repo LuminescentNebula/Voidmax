@@ -1,0 +1,31 @@
+classDiagram 
+    namespace EventSpace {
+        class EventDatabase
+        class EventData
+        class Option
+    }
+    Option --> EventDatabase
+    EventDatabase --> EventData
+    EventData --> Option
+    EventScreen --> EventData
+
+    class EventDatabase{
+        Dict~int, EventData~ events
+        getEvent(int id) EventData
+    }
+
+
+    class EventData{
+            int id
+            Image image
+            Text text
+            Option[] options
+        }
+
+    class Option {
+        String text
+        boolean special
+        %% EventData id
+        next() int
+        isAvailable() boolean
+    }

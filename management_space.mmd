@@ -1,0 +1,68 @@
+classDiagram 
+    namespace ManagementSpace {
+        class Prisoner
+        class Item
+
+        class Module
+        class Engine
+        class Weapon
+
+        class PlayerData
+    }
+    class PlayerData {
+        int maxPrisoners
+        int prisoners
+        
+        int maxUniquePrisoners
+        int uniquePrisoners
+        Prisoner[] prisoners
+
+        int maxItems
+        int items
+        int equipedItems
+        Item[] items
+        
+        killPrisoners(int amount = 1)
+        killUniquePrisoners(int amonunt = 1)
+        destroyItems(int amonunt = 1)
+        destroyEquipedItems(int amonunt = 1)
+        
+        addItem(Item item)
+        addItem(Item[] items)
+        addPrisoner(Prisoner prisoner)
+        addPrisoner(Prisoner[] prisoner)
+               
+        int fuel
+    }
+
+
+    PlayerData --> Item
+    PlayerData --> Prisoner
+    class Item {
+        String name
+        String description
+    }
+    class Prisoner {
+        String name
+        Sprite image
+    }
+    class PrisonerGenerator{
+        generate() Prisoner
+    }
+    PrisonerGenerator --> Prisoner
+
+    Engine --|> Module
+    Weapon --|> Module
+    Module --|> Item
+
+    class Engine {
+        getMovingPattern()
+    }
+
+    class Weapon {
+        getRangePattern()
+        getDamage()
+    }
+
+    Pattern --|> Graph~E~
+    

@@ -1,0 +1,19 @@
+classDiagram
+    LevelScreen --> Level
+    CombatScreen --> Combat
+    GridPlayer --> PlayerData
+    UIGrid --|> UIElement
+    Screen --|> Update
+    Screen --|> Render
+    namespace Screenspace {
+        class LevelScreen
+        class CombatScreen
+        class EventScreen
+    }
+    %% combat withe enemy when certain cell is opened
+    Screen <|-- CombatScreen
+    %% level with closed cells
+    Screen <|-- LevelScreen
+    %% event screen with text, picture and buttons
+    Screen <|-- EventScreen
+

@@ -6,6 +6,8 @@
 
 classDiagram   
     namespace UIspace {
+        class Canvas
+
         class UIElement
         class InteractableUIElement
         class Container
@@ -30,6 +32,14 @@ classDiagram
         class Color
         class Dropdown
     }
+
+    class Canvas {
+        Vector2 size
+        UIElement[] elements
+        resize(float width, float height)
+    }
+    %%Canvas --|> Update
+    %%Canvas --|> Render
 
     class Vector2 {
         float x

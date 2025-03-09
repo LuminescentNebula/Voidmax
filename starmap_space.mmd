@@ -1,0 +1,31 @@
+classDiagram 
+    namespace StarMapSpace {
+        class StarMapGenerator
+        class StarMap
+        class Star
+        class Way
+    }
+
+    class StarMapGenerator{
+        generate(int seed) StarMap
+    }
+
+    class StarMap {
+        Star[] stars
+        Way[] ways
+    } 
+    class Way {
+        Star start
+        Star end
+        boolean isBilateral
+    }
+    class Star {
+        int x, y, size
+        Way[] neighbors
+        Color color
+        boolean isVisited
+        boolean isCurrent
+    }
+    StarMapGenerator --> StarMap
+    StarMap --> Way
+    StarMap --> Star

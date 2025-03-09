@@ -3,31 +3,30 @@ classDiagram
         class Grid~E~
         class IndexedGrid~E~
         class UIGrid~E~
-        class Point
+        class GridPoint
 
         class Indexer
         class ZigZagIndexer
         class SpiralIndexer
         class MortonIndexer
     }
-        class Point {
-            int x
-            int y
-            getSideNeighbors() Point[4]
-            getDiagonalNeighbors() Point[4]
-            getNeighbors() Point[8]
-            getNeighbors(int range) Point[]
+        class GridPoint {
+            getSideNeighbors() GridPoint[4]
+            getDiagonalNeighbors() GridPoint[4]
+            getNeighbors() GridPoint[8]
+            getNeighbors(int range) GridPoint[]
         }
+        GridPoint --|> Point
 
         class Grid~E~ {
             <<Interface>>
-            add(Point point, E obj)
+            add(GridPoint Gridpoint, E obj)
             add(int x, int y, E obj)
-            get(Point point)
+            get(GridPoint Gridpoint)
             get(int x, int y)
-            remove(Point point)
+            remove(GridPoint Gridpoint)
             remove(int x, int y)
-            set(Point point, E obj)
+            set(GridPoint Gridpoint, E obj)
             set(int x, int y, E obj)
         }
 
@@ -48,7 +47,7 @@ classDiagram
         }
 
         class Indexer {
-            indexOf(Point point) int
+            indexOf(GridPoint Gridpoint) int
             indexOf(int x, int y) int
         }
         
@@ -56,7 +55,6 @@ classDiagram
         Grid <|-- IndexedGrid
         IndexedGrid "1" --> "1" Indexer
         UIGrid --|> IndexedGrid
-        UIGrid --|> UIElement
         Indexer <|-- ZigZagIndexer
         Indexer <|-- SpiralIndexer
         Indexer <|-- MortonIndexer
